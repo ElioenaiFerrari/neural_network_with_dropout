@@ -6,19 +6,20 @@ from keras.layers import Dense, Dropout
 class NeuralModel:
     model = Sequential()
 
-    optimizer = optimizers.Adam(
-        lr=0.001,
-        decay=0.0001,
-        clipvalue=0.5
-    )
-
-    def create_network(self):
+    def create_network(
+        self,
+        optimizer,
+        loss,
+        kernel_initializer,
+        activation,
+        neurons
+    ):
         self.model.add(
             Dense(
                 input_dim=30,
-                units=16,
-                kernel_initializer='random_uniform',
-                activation='relu',
+                units=neurons,
+                kernel_initializer=kernel_initializer,
+                activation=activation,
             )
         )
 
@@ -26,9 +27,9 @@ class NeuralModel:
 
         self.model.add(
             Dense(
-                units=16,
-                kernel_initializer='random_uniform',
-                activation='relu',
+                units=neurons,
+                kernel_initializer=kernel_initializer,
+                activation=activation,
             )
         )
 
@@ -42,8 +43,8 @@ class NeuralModel:
         )
 
         self.model.compile(
-            optimizer=self.optimizer,
-            loss='binary_crossentropy',
+            optimizer=optimizer,
+            loss=loss,
             metrics=['binary_accuracy']
         )
 
